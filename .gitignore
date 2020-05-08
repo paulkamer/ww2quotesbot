@@ -1,0 +1,5 @@
+docs/notes.md
+dist/
+node_modules/
+*.code-workspace
+tmp/
