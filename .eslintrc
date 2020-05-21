@@ -1,0 +1,23 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2019
+  },
+  "extends": ["prettier", "eslint:recommended", "plugin:node/recommended"],
+  "plugins": ["prettier"],
+  "env": {
+    "mocha": true,
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "node/no-unpublished-require": [
+      "error",
+      {
+        "allowModules": ["mocha", "sinon", "chai", "aws-sdk"]
+      }
+    ]
+  }
+}

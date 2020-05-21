@@ -1,0 +1,8 @@
+dist/
+build/
+docs/
+scripts/
+node_modules/
+
+cloudformation.yml
+.eslintrc.json

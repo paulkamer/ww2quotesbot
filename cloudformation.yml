@@ -1,0 +1,79 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Twitter bot sending WWII-related Quotes
+Resources:
+  ww2twitterbotbucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ww2twitterbot
+
+  ww2botlambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: ww2botlambda
+      Handler: lambda/index.handler
+      Role: !GetAtt 'ww2botRole.Arn'
+      Code:
+        S3Bucket: ww2twitterbot-lambda
+        S3Key: ww2twitterbotCode
+      Runtime: nodejs12.x
+      Timeout: 30
+      Environment:
+        Variables:
+          SSM_PARAMETER_NAME: '/WW2_QUOTES_BOT/TWITTER_CREDENTIALS'
+
+  ww2botRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: ww2botRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: AWSLambdaBasicExecutionRole
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+        - PolicyName: AmazonS3FullAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:ListBucket
+                  - s3:PutObject
+                  - s3:PutObjectAcl
+                  - s3:GetObject
+                  - s3:GetObjectAcl
+                  - s3:SelectObjectContent
+                Resource:
+                  - arn:aws:s3:::ww2twitterbot
+                  - arn:aws:s3:::ww2twitterbot/*
+        - PolicyName: SsmAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ssm:GetParameter
+                Resource: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/WW2_QUOTES_BOT/TWITTER_CREDENTIALS'
+        - PolicyName: KmsDecrypt
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - kms:Decrypt
+                Resource: !Sub 'arn:aws:kms:${AWS::Region}:${AWS::AccountId}:key/ebdaf185-9ee0-4ffa-97c5-c4492fc7f2d5'
