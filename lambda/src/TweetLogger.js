@@ -19,9 +19,9 @@ module.exports = class TweetLogger {
   async logTweet(tweetId) {
     const log = await this.fetchTweetsLog();
 
-    if (log.length >= settings.max_tweet_log_length) log.pop();
+    log.push({ id: tweetId, time: Date.now() });
 
-    log.unshift({ id: tweetId, time: Date.now() });
+    if (log.length >= settings.max_tweet_log_length) log.shift();
 
     await this.saveTweetsLog(log);
   }

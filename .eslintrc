@@ -16,7 +16,7 @@
     "node/no-unpublished-require": [
       "error",
       {
-        "allowModules": ["mocha", "sinon", "chai", "aws-sdk"]
+        "allowModules": ["mocha", "sinon", "chai", "aws-sdk", "aws-sdk-mock"]
       }
     ]
   }
