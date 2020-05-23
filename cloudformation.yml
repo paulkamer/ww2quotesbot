@@ -36,7 +36,7 @@ Resources:
               - sts:AssumeRole
       Path: /
       Policies:
-        - PolicyName: AWSLambdaBasicExecutionRole
+        - PolicyName: CloudWatchWw2Twitterbot
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
@@ -46,7 +46,7 @@ Resources:
                   - logs:CreateLogStream
                   - logs:PutLogEvents
                 Resource: '*'
-        - PolicyName: AmazonS3FullAccess
+        - PolicyName: S3AccessWw2Twitterbot
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
