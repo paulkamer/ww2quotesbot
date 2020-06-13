@@ -78,17 +78,21 @@ class S3SqlHandler {
       SELECT * FROM S3Object
       WHERE (
         NOT CAST(id as INT) IN (${blacklistedIds.join(',')})
+        AND checked = 'y'
         AND (
-          (
-            EXTRACT(MONTH FROM CAST(quote_date as TIMESTAMP)) = ${currentMonth}
-            AND
-            EXTRACT(DAY FROM CAST(quote_date as TIMESTAMP)) = ${currentDay}
-          )
-          OR
-          (
-            NOT EXTRACT(MONTH FROM CAST(quote_date as TIMESTAMP)) IN (${currentMonth},${nextMonth})
+          (quote_date = NULL OR quote_date = '')
+          OR (
+            (
+              EXTRACT(MONTH FROM CAST(quote_date as TIMESTAMP)) = ${currentMonth}
+              AND
+              EXTRACT(DAY FROM CAST(quote_date as TIMESTAMP)) = ${currentDay}
+            )
             OR
-            EXTRACT(MONTH FROM CAST(quote_date as TIMESTAMP)) = ${nextMonth} AND EXTRACT(DAY FROM CAST(quote_date as TIMESTAMP)) > ${currentDay}
+            (
+              NOT EXTRACT(MONTH FROM CAST(quote_date as TIMESTAMP)) IN (${currentMonth},${nextMonth})
+              OR
+              EXTRACT(MONTH FROM CAST(quote_date as TIMESTAMP)) = ${nextMonth} AND EXTRACT(DAY FROM CAST(quote_date as TIMESTAMP)) > ${currentDay}
+            )
           )
         )
       )
