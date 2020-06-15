@@ -20,13 +20,15 @@ module.exports = class TweetStatusFormatter {
     const tweetText = this.tweet.tweet_text;
 
     const links = this.tweet.links ? this.splitString(this.tweet.links) : '';
-    const hashtags = this.tweet.hashtags
+    let hashtags = this.tweet.hashtags
       ? this.splitString(this.tweet.hashtags)
       : '';
 
-    // TODO support media
-    // TODO include the "#OTD" (On This Day) hashtag, when tweet's date is
-    //      equal to current date (ignoring the Year part)
+    // Include "#OTD" hashtag when quote_date has same day+month
+    if (this.isTweetOnThisDay) {
+      hashtags += ' #OTD';
+      hashtags = hashtags.trim();
+    }
 
     return [tweetText, links, hashtags]
       .map((x) => x.trim())
@@ -48,5 +50,25 @@ module.exports = class TweetStatusFormatter {
       .split(splitSeparator)
       .map((part) => part.trim())
       .join(joinSeparator);
+  }
+
+  /**
+   * Determine if the quote_date of the tweet is "on the same day" (has the same
+   * day and month).
+   */
+  get isTweetOnThisDay() {
+    if (!this.tweet.quote_date) return false;
+
+    let month = new Date().getMonth() + 1;
+    month = month === 12 ? 1 : month;
+    const day = new Date().getDate();
+
+    const dayPart = day < 10 ? `0?${day}` : day;
+    const monthPart = month < 10 ? `0?${month}` : month;
+
+    // Matches date string with format: "2020-(0)3-(0)4"
+    const sameDayRegex = new RegExp(`\\d{4}-${monthPart}-${dayPart}`);
+
+    return sameDayRegex.test(this.tweet.quote_date);
   }
 };
