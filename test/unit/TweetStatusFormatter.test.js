@@ -12,7 +12,7 @@ describe('TweetStatusFormatter', () => {
     it('Splits a comma-separated string', () => {
       const result = formatter.splitString('#hash1,#hash2');
 
-      expect(result).to.eql('#hash1 #hash2');
+      expect(result).to.eql(['#hash1', '#hash2']);
     });
 
     it('Splits a comma-separated string, and trimming whitespace', () => {
@@ -20,19 +20,19 @@ describe('TweetStatusFormatter', () => {
         '   #hash1, #hash2, #hash3  ,#hash4'
       );
 
-      expect(result).to.eql('#hash1 #hash2 #hash3 #hash4');
+      expect(result).to.eql(['#hash1', '#hash2', '#hash3', '#hash4']);
     });
 
     it('Returns an unmodified string that doesnt contain a comma', () => {
       const result = formatter.splitString('This is a regular string');
 
-      expect(result).to.eql('This is a regular string');
+      expect(result).to.eql(['This is a regular string']);
     });
 
     it('Returns a trimmed string that doesnt contain a comma', () => {
       const result = formatter.splitString('    test test test ');
 
-      expect(result).to.eql('test test test');
+      expect(result).to.eql(['test test test']);
     });
   });
 
@@ -96,7 +96,7 @@ describe('TweetStatusFormatter', () => {
           tweet.tweet
         ).formatTweetStatusString();
 
-        expect(tweetString).to.eql(tweet.expectedResult);
+        expect(tweetString).to.contain(tweet.expectedResult);
       });
     });
   });
@@ -168,7 +168,7 @@ describe('TweetStatusFormatter', () => {
           tweet.tweet
         ).formatTweetStatusString();
 
-        expect(tweetString).to.include(tweet.expectedResult);
+        expect(tweetString).to.contain(tweet.expectedResult);
       });
     });
   });

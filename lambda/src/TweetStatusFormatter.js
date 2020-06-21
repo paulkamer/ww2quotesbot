@@ -19,16 +19,11 @@ module.exports = class TweetStatusFormatter {
   formatTweetStatusString() {
     const tweetText = this.tweet.tweet_text;
 
-    const links = this.tweet.links ? this.splitString(this.tweet.links) : '';
-    let hashtags = this.tweet.hashtags
-      ? this.splitString(this.tweet.hashtags)
+    const links = this.tweet.links
+      ? this.splitString(this.tweet.links).join(' ')
       : '';
 
-    // Include "#OTD" hashtag when quote_date has same day+month
-    if (this.isTweetOnThisDay) {
-      hashtags += ' #OTD';
-      hashtags = hashtags.trim();
-    }
+    const hashtags = this.formatHashtagsString();
 
     return [tweetText, links, hashtags]
       .map((x) => x.trim())
@@ -37,19 +32,34 @@ module.exports = class TweetStatusFormatter {
   }
 
   /**
+   * Format a string containing hashtags
+   *
+   * Adds #OTD hashtag when tweet was on current day+month
+   * Adds #WW2 & #WWII
+   */
+  formatHashtagsString() {
+    let hashtags = this.tweet.hashtags
+      ? this.splitString(this.tweet.hashtags)
+      : [];
+
+    // Include "#OTD" hashtag when quote_date has same day+month
+    if (this.isTweetOnThisDay) hashtags.push('#OTD');
+
+    hashtags.push('#WW2', '#WWII');
+
+    return hashtags.map((h) => h.trim()).join(' ');
+  }
+
+  /**
    * Splits a string (typically comma-separated) and trims any excess whitespace from the parts.
    *
    * @param {String} inputString
-   * @param {String} splitSeparator character to split the string on
-   * @param {String} joinSeparator character to join the string parts with
+   * @param {String} separator character to split the string on
    *
-   * @returns {String}
+   * @returns Array
    */
-  splitString(inputString, splitSeparator = ',', joinSeparator = ' ') {
-    return inputString
-      .split(splitSeparator)
-      .map((part) => part.trim())
-      .join(joinSeparator);
+  splitString(inputString, separator = ',') {
+    return inputString.split(separator).map((part) => part.trim());
   }
 
   /**
