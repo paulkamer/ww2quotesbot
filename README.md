@@ -16,10 +16,8 @@ In a nutshell:
 **Random tweet selection**
 
 - Relies on tweets log file to prevent sending same tweet too soon again
-- Favor tweets "of same day*
-  - otherwise picks a random tweet that's "not in the near future"*
-
-> \* By comparing the current date with the `quote_date` ignoring the year part.
+- Favor tweets "of same day" (based on day+month)
+  - otherwise picks a random tweet that's "not in the near future"
 
 <br/>
 
@@ -42,5 +40,4 @@ Lambda function code (node.js)
 
 TODOs
 - Build up database of tweets
-- Set up CloudWatch event rule, for automatic sending of tweets
 - Migrate to TypeScript
