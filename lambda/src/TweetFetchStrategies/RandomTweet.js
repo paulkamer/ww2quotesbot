@@ -79,13 +79,17 @@ class RandomTweet {
   }
 
   /**
-   * Pick a random tweet from the given list of tweets
+   * Pick a random tweet from the given list of tweets, but one that is not flagged as otd_only
    *
    * @param {Array<Object>} tweets
    * @returns {Object}
    */
   pickRandomTweet(tweets) {
-    return tweets[Math.floor(Math.random() * tweets.length)];
+    const tweetsExcludingOtdOnly = tweets.filter((t) => t.otd_only !== 'y');
+
+    return tweetsExcludingOtdOnly[
+      Math.floor(Math.random() * tweetsExcludingOtdOnly.length)
+    ];
   }
 }
 

@@ -41,7 +41,7 @@ describe('RandomTweet fetch strategy', () => {
   describe('pickRandomTweet', () => {
     const tweets = ['a', 'b'];
 
-    it('Always returns a random tweet', () => {
+    it('returns a random tweet', () => {
       let result = true;
 
       // Pick a random one 20 times; check that undefined is never returned.
@@ -50,6 +50,25 @@ describe('RandomTweet fetch strategy', () => {
       ).includes(undefined);
 
       expect(result).to.eql(false);
+    });
+
+    it('excludes otd_only tweets', () => {
+      const tweets = [
+        { tweet_text: 'abc', otd_only: 'y' },
+        { tweet_text: 'def', otd_only: '' },
+      ];
+
+      const result = new RandomTweet().pickRandomTweet(tweets);
+
+      expect(result.tweet_text).to.eql('def');
+    });
+
+    it('returns undefined when no non-otd_only tweet is available', () => {
+      const tweets = [{ tweet_text: 'abc', otd_only: 'y' }];
+
+      const result = new RandomTweet().pickRandomTweet(tweets);
+
+      expect(result).to.eql(undefined);
     });
   });
 });
