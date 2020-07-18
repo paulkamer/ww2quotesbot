@@ -10,15 +10,18 @@
     "doc": "docs"
   },
   "scripts": {
-    "start:dev:random": "LOG_LEVEL=debug lambda-local -l lambda/index.js -h handler -e test/event-data/randomtweet.js",
-    "start:dev:specific": "LOG_LEVEL=debug lambda-local -l lambda/index.js -h handler -e test/event-data/specifictweet.js",
+    "start:dev:random": "LOG_LEVEL=debug lambda-local -l ww2bot/index.js -h handler -e test/event-data/randomtweet.js",
+    "start:dev:specific": "LOG_LEVEL=debug lambda-local -l ww2bot/index.js -h handler -e test/event-data/specifictweet.js",
     "lint": "eslint .",
     "prettier": "prettier --write .",
     "test": "DISABLE_LOGGING=1 ./node_modules/.bin/mocha --recursive test/",
-    "build": "bash scripts/build.sh",
-    "deploy:lambda": "bash scripts/deploy_lambda_function.sh",
+    "build:twitterbot": "bash scripts/build_twitterbot.sh",
+    "build:retweeter": "bash scripts/build_retweeter.sh",
+    "build:all": "npm run-script build:twitterbot && npm run-script build:retweeter",
+    "deploy:twitterbot": "bash scripts/deploy_twitterbot.sh",
+    "deploy:retweeter": "bash scripts/deploy_retweeter.sh",
     "deploy:cloudformation": "aws cloudformation deploy --stack-name ww2twitterbot --template-file cloudformation.yml --capabilities CAPABILITY_NAMED_IAM",
-    "deploy:all": "npm run-script deploy:lambda && npm run-script deploy:cloudformation"
+    "deploy:all": "npm run-script deploy:twitterbot && npm run-script deploy:retweeter && npm run-script deploy:cloudformation"
   },
   "author": "",
   "license": "ISC",

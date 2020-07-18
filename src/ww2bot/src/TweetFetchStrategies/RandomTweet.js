@@ -1,7 +1,7 @@
-const settings = require('../../config');
+const settings = require('../../../config');
 const TweetLogger = require('../TweetLogger');
 const JsonParser = require('../S3/ResultParsers/JsonParser');
-const { logger } = require('../lib/logger');
+const { logger } = require('../../../lib/logger');
 
 /**
  * Strategy to fetch a random tweet

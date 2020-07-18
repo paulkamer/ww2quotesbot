@@ -1,8 +1,9 @@
-const { logger } = require('./lib/logger');
+const { logger } = require('../../lib/logger');
 
 const TweetLogger = require('./TweetLogger');
 const TweetFetcher = require('./TweetFetcher');
 const TweetSender = require('./TweetSender');
+const RetweetScheduler = require('./RetweetScheduler');
 
 module.exports = class TwitterBot {
   /**
@@ -31,7 +32,7 @@ module.exports = class TwitterBot {
 
     await tweetLogger.logTweet(tweet.id);
 
-    // TODO: phase II - schedule re-tweet after 8-12 hours
+    await this.scheduleRetweet(sendResult);
 
     return tweet;
   }
@@ -41,5 +42,14 @@ module.exports = class TwitterBot {
    */
   async sendTweet(tweet) {
     return await new TweetSender(tweet).send();
+  }
+
+  /**
+   * schedule re-tweet after 8-12 hours
+   */
+  async scheduleRetweet(sendResult) {
+    const id = sendResult.id_str;
+
+    return await new RetweetScheduler(id).schedule();
   }
 };

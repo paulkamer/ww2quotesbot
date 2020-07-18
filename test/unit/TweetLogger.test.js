@@ -1,9 +1,9 @@
 const AWS = require('aws-sdk-mock');
 const expect = require('chai').expect;
 const sinon = require('sinon');
-const settings = require('../../lambda/config');
+const settings = require('../../src/config');
 
-const TweetLogger = require('../../lambda/src/TweetLogger');
+const TweetLogger = require('../../src/ww2bot/src/TweetLogger');
 
 describe('TweetLogger', () => {
   describe('Fetching logged tweet IDs', () => {

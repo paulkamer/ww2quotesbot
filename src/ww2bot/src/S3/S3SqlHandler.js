@@ -1,6 +1,6 @@
 const aws = require('aws-sdk');
 
-const { logger } = require('../lib/logger');
+const { logger } = require('../../../lib/logger');
 
 class S3SqlHandler {
   CSV_INPUT_SERIALIZATION = {

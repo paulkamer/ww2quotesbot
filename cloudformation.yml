@@ -10,7 +10,7 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       FunctionName: ww2botlambda
-      Handler: lambda/index.handler
+      Handler: ww2bot/index.handler
       Role: !GetAtt 'ww2botRole.Arn'
       Code:
         S3Bucket: ww2twitterbot-lambda
@@ -20,6 +20,22 @@ Resources:
       Environment:
         Variables:
           SSM_PARAMETER_NAME: '/WW2_QUOTES_BOT/TWITTER_CREDENTIALS'
+          LOG_LEVEL: debug
+
+  retweeter:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: ww2botretweeter
+      Handler: retweeter/index.handler
+      Role: !GetAtt 'ww2botRole.Arn'
+      Code:
+        S3Bucket: ww2twitterbot-retweeter
+        S3Key: ww2twitterbotCode
+      Runtime: nodejs12.x
+      Timeout: 5
+      Environment:
+        Variables:
+          SSM_PARAMETER_NAME: '/WW2_QUOTES_BOT/TWITTER_CREDENTIALS'      
 
   ww2botRole:
     Type: AWS::IAM::Role
@@ -77,3 +93,4 @@ Resources:
                 Action:
                   - kms:Decrypt
                 Resource: !Sub 'arn:aws:kms:${AWS::Region}:${AWS::AccountId}:key/ebdaf185-9ee0-4ffa-97c5-c4492fc7f2d5'
+                  

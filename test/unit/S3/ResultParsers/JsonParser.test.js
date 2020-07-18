@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-const JsonParser = require('../../../../lambda/src/S3/ResultParsers/JsonParser');
+const JsonParser = require('../../../../src/ww2bot/src/S3/ResultParsers/JsonParser');
 
 describe('JSON S3 resultparser', () => {
   describe('Basic parsing', () => {

@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-const TweetStatusFormatter = require('../../lambda/src/TweetStatusFormatter');
+const TweetStatusFormatter = require('../../src/ww2bot/src/TweetStatusFormatter');
 
 describe('TweetStatusFormatter', () => {
   describe('splitString', () => {

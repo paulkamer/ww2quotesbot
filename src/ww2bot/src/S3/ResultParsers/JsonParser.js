@@ -1,4 +1,4 @@
-const { logger } = require('../../lib/logger');
+const { logger } = require('../../../../lib/logger');
 
 /**
  * Helper class to parse a string as JSON.

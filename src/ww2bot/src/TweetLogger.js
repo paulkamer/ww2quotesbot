@@ -1,7 +1,7 @@
 const aws = require('aws-sdk');
 
-const settings = require('../config');
-const { logger } = require('./lib/logger');
+const settings = require('../../config');
+const { logger } = require('../../lib/logger');
 
 /**
  * Log tweets that were sent to a log file.

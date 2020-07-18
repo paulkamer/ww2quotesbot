@@ -1,7 +1,7 @@
 'use strict';
 
 const TwitterBot = require('./src/TwitterBot');
-const { logger } = require('./src/lib/logger');
+const { logger } = require('../lib/logger');
 
 /**
  * Publish a specific tweet if a tweetId was sent with the event/request.

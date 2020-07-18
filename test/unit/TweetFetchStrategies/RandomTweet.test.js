@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-const RandomTweet = require('../../../lambda/src/TweetFetchStrategies/RandomTweet');
+const RandomTweet = require('../../../src/ww2bot/src/TweetFetchStrategies/RandomTweet');
 
 describe('RandomTweet fetch strategy', () => {
   describe('pickTweetOnSameDay', () => {

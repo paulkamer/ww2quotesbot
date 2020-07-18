@@ -16,7 +16,9 @@ else
 fi
 
 # Copy files to build/ dir
-cp -r lambda/ build/
+cp -r src/ww2bot/ build/
+cp -r src/config/ build/
+cp -r src/lib/ build/
 cp package.json package-lock.json build/
 
 # Install NPM dependencies (production only)

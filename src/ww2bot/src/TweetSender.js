@@ -1,7 +1,7 @@
 const Twitter = require('twitter-lite');
 
-const { logger } = require('./lib/logger');
-const credentialsStore = require('./lib/credentialsStore');
+const { logger } = require('../../lib/logger');
+const credentialsStore = require('../../lib/CredentialsStore');
 const TweetStatusFormatter = require('./TweetStatusFormatter');
 
 module.exports = class TweetSender {
@@ -49,6 +49,6 @@ module.exports = class TweetSender {
 
     logger.debug('tweet result', postResult);
 
-    return true;
+    return postResult;
   }
 };

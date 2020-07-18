@@ -1,6 +1,6 @@
-const settings = require('../../config');
+const settings = require('../../../config');
 const JsonParser = require('../S3/ResultParsers/JsonParser');
-const { logger } = require('../lib/logger');
+const { logger } = require('../../../lib/logger');
 
 /**
  * Strategy to fetch a specific tweet by it's id.
@@ -22,9 +22,11 @@ class SpecificTweet {
       Key: settings.tweets_csv_file,
     };
 
-    const tweet = await this.s3SqlHandler.fetchTweetById(this.tweetId, params);
+    const result = await this.s3SqlHandler.fetchTweetById(this.tweetId, params);
 
-    return new JsonParser(tweet).parse();
+    const parsedResult = new JsonParser(result).parse();
+
+    return parsedResult['0'];
   }
 }
 
