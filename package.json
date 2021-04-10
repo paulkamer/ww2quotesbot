@@ -1,7 +1,9 @@
 {
   "name": "ww2quotesbot",
-  "version": "1.0.0",
   "description": "AWS Lambda-based Twitter bot that tweets WW2-related quotes.",
+  "version": "1.0.0",
+  "author": "Paul Kamer <paulkamer@gmail.com>",
+  "license": "ISC",
   "engines": {
     "node": ">=12.0.0"
   },
@@ -10,8 +12,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "start:dev:random": "LOG_LEVEL=debug lambda-local -l ww2bot/index.js -h handler -e test/event-data/randomtweet.js",
-    "start:dev:specific": "LOG_LEVEL=debug lambda-local -l ww2bot/index.js -h handler -e test/event-data/specifictweet.js",
+    "start:dev:random": "lambda-local -l src/ww2bot/index.js -h handler -e test/event-data/randomtweet.js -t 10 --envfile dev.env",
+    "start:dev:specific": "lambda-local -l src/ww2bot/index.js -h handler -e test/event-data/specifictweet.js -t 10 --envfile dev.env",
     "lint": "eslint .",
     "prettier": "prettier --write .",
     "test": "DISABLE_LOGGING=1 ./node_modules/.bin/mocha --recursive test/",
@@ -23,10 +25,8 @@
     "deploy:cloudformation": "aws cloudformation deploy --stack-name ww2twitterbot --template-file cloudformation.yml --capabilities CAPABILITY_NAMED_IAM",
     "deploy:all": "npm run-script deploy:twitterbot && npm run-script deploy:retweeter && npm run-script deploy:cloudformation"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "twitter-lite": "^0.10.1-0",
+    "twitter-lite": "^0.14",
     "winston": "^3.2.1"
   },
   "devDependencies": {

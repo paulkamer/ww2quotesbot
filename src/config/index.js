@@ -5,7 +5,9 @@ module.exports = {
 
   retweet_queue_file: 'retweetQueue.json',
 
-  retweetPostponementInHours: 5,
+  retweetDelayInHours: 5,
 
   max_tweet_log_length: 50,
+
+  mediaUrlFields: ['media_url_1', 'media_url_2', 'media_url_3', 'media_url_4'],
 };

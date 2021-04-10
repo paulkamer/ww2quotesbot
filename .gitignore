@@ -2,3 +2,5 @@ dist/
 docs/notes.md
 node_modules/
 *.code-workspace
+
+*.env

@@ -27,7 +27,7 @@ module.exports = class RetweetScheduler {
 
   generateRetweetTimestamp() {
     const date = new Date();
-    date.setHours(date.getHours() + settings.retweetPostponementInHours);
+    date.setHours(date.getHours() + settings.retweetDelayInHours);
 
     return date.toISOString();
   }
