@@ -19,7 +19,7 @@ Resources:
       Timeout: 30
       Environment:
         Variables:
-          SSM_PARAMETER_NAME: '/WW2_QUOTES_BOT/TWITTER_CREDENTIALS'
+          TWITTER_CRED_PARAM_NAME: '/WW2_QUOTES_BOT/TWITTER_CREDENTIALS'
           LOG_LEVEL: debug
 
   retweeter:
@@ -35,7 +35,7 @@ Resources:
       Timeout: 5
       Environment:
         Variables:
-          SSM_PARAMETER_NAME: '/WW2_QUOTES_BOT/TWITTER_CREDENTIALS'      
+          TWITTER_CRED_PARAM_NAME: '/WW2_QUOTES_BOT/TWITTER_CREDENTIALS'      
 
   ww2botRole:
     Type: AWS::IAM::Role

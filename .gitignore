@@ -1,6 +1,12 @@
+build/
+blobs/
 dist/
-docs/notes.md
 node_modules/
 *.code-workspace
+.nyc_output
 
 *.env
+.private
+local.settings.json
+retweetQueue.json
+testfunction
